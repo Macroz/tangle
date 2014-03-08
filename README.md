@@ -17,10 +17,18 @@ Run in your favourite REPL:
 ```clj
 > (use 'tangle.core)
 nil
-> (dot->image (graph->dot [:a :b :c :d]
-                          [[:a :b] [:a :c] [:c :d]]
+> (def i (dot->image (graph->dot [:a :b :c :d]
+                          [[:a :b] [:a :c] [:c :d] [:a :c {:label "another" :style :dashed}]]
                           {:shape :box})
-              "png")
+                     "png"))
+```
+
+Now do something with the image!
+
+```clj
+> (use 'rhizome.viz)
+nil
+> (view-image i)
 ```
 
 Background
