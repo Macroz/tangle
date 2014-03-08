@@ -211,21 +211,17 @@
 
 (defn- format-edge
   "Formats the edge as DOT node."
-  ([src dst]
-     (format-edge src dst {}))
-  ([src dst options]
-     (let [directed? (:directed? options)
-           options (dissoc options :directed?)
-           arrow (if directed? " -> " " -- ")]
-       (str (format-id src) arrow (format-id dst)
-            (wrap-brackets-if options (format-options options))))))
+  [src dst options directed?]
+  (let [arrow (if directed? " -> " " -- ")]
+    (str (format-id src) arrow (format-id dst)
+         (wrap-brackets-if options (format-options options)))))
 
 (deftest format-edge-test
-  (are [e src dst opts] (= e (format-edge src dst opts))
-       "\"a\" -- \"b\"" "a" "b" {}
-       "a -- b" :a :b {}
-       "a -> b" :a :b {:directed? true}
-       "a -- \"b\"[label=\"foobar\", weight=1]" :a "b" (ordered-map :label "foobar" :weight 1)
+  (are [e src dst opts dir] (= e (format-edge src dst opts dir))
+       "\"a\" -- \"b\"" "a" "b" {} false
+       "a -- b" :a :b {} false
+       "a -> b" :a :b {} true
+       "a -- \"b\"[label=\"foobar\", weight=1]" :a "b" (ordered-map :label "foobar" :weight 1) false
        ))
 
 (defn map-edges [m]
@@ -239,8 +235,8 @@
   "Transforms a graph of nodes and edges into GraphViz DOT format"
   [nodes edges options]
   (let [directed? (:directed? options false)
-        node->descriptor (:node-descriptor options (constantly nil))
-        edge->descriptor (:edge-descriptor options (constantly nil))
+        node->descriptor (:node->descriptor options (constantly nil))
+        edge->descriptor (:edge->descriptor options identity)
         node->id (comp format-id (:node->id options identity))
         node->cluster (:node->cluster options)
         cluster->parent (:cluster->parent options (constantly nil))
@@ -287,7 +283,10 @@
            (when-not current-cluster
              ;; format edges
              (apply str (->> edges
-                             (map #(apply format-edge %))
+                             (map (fn [[src dst & opts]]
+                                    (if (empty? opts)
+                                      (format-edge src dst (edge->descriptor src dst opts) (:directed? options))
+                                      (format-edge src dst (edge->descriptor src dst (first opts)) (:directed? options)))))
                              (interpose "\n"))))
            "\n"
 
@@ -300,4 +299,3 @@
   [dot format]
   (let [{:keys [out err]} (sh/sh "dot" (str "-T" format) :in dot :out-enc :bytes)]
     (javax.imageio.ImageIO/read (io/input-stream out))))
-
