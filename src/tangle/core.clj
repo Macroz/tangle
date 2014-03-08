@@ -120,6 +120,23 @@
 
 
 
+(defn- format-id
+  "Formats an id value in DOT format with proper escaping"
+  [x]
+  (cond
+   (string? x) (str \" (escape x) \")
+   (keyword? x) (name x)
+   :else (str x)))
+
+(deftest format-id-test
+  (are [e x] (= e (format-option-value x))
+       "\"42\"" "42"
+       "42" 42
+       "42" :42
+       ))
+
+
+
 (defn- format-option-value
   "Formats an option value in DOT format with proper escaping"
   [x]
@@ -200,14 +217,15 @@
      (let [directed? (:directed? options)
            options (dissoc options :directed?)
            arrow (if directed? " -> " " -- ")]
-       (str src arrow dst
+       (str (format-id src) arrow (format-id dst)
             (wrap-brackets-if options (format-options options))))))
 
 (deftest format-edge-test
   (are [e src dst opts] (= e (format-edge src dst opts))
-       "a -- b" "a" "b" {}
-       "a -> b" "a" "b" {:directed? true}
-       "a -- b[label=\"foobar\", weight=1]" "a" "b" (ordered-map :label "foobar" :weight 1)
+       "\"a\" -- \"b\"" "a" "b" {}
+       "a -- b" :a :b {}
+       "a -> b" :a :b {:directed? true}
+       "a -- \"b\"[label=\"foobar\", weight=1]" :a "b" (ordered-map :label "foobar" :weight 1)
        ))
 
 (defn map-edges [m]
@@ -223,7 +241,7 @@
   (let [directed? (:directed? options false)
         node->descriptor (:node-descriptor options (constantly nil))
         edge->descriptor (:edge-descriptor options (constantly nil))
-        node->id (:node->id options identity)
+        node->id (comp format-id (:node->id options identity))
         node->cluster (:node->cluster options)
         cluster->parent (:cluster->parent options (constantly nil))
         cluster->id (:cluster->id options identity)
