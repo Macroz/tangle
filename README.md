@@ -9,18 +9,16 @@ Tangle is a Clojure library to visualize your tangle of data with [GraphViz](htt
 Add to your project.clj:
 
 ```clj
-[tangle "0.1.0"]
+[tangle "0.1.1"]
 ```
 
 Run in your favourite REPL:
 
 ```clj
 > (use 'tangle.core)
-nil
-> (def i (dot->image (graph->dot [:a :b :c :d]
-                          [[:a :b] [:a :c] [:c :d] [:a :c {:label "another" :style :dashed}]]
-                          {:shape :box})
-                     "png"))
+> (def nodes [:a :b :c :d])
+> (def edges [[:a :b] [:a :c] [:c :d] [:a :c {:label "another" :style :dashed}]])
+> (def i (dot->image (graph->dot nodes edges {:shape :box}) "png"))
 ```
 
 Now do something with the image!
