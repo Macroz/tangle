@@ -33,6 +33,23 @@ This is what you will get:
 
 ![Example graph](examples/1.png?raw=true)
 
+And the corresponding DOT:
+
+```
+graph {
+graph[dpi=100, rankdir=TP]
+a
+b
+c
+d
+
+a -- b
+a -- c
+c -- d
+a -- c[style=dashed, label="another"]
+}
+```
+
 Background
 ----------
 
