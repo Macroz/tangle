@@ -276,7 +276,9 @@
            "\n"
 
            ;; format subclusters
-           (let [clusters (filter #(= (cluster->parent %) current-cluster) clusters)]
+           (let [clusters (->> clusters
+                               (filter #(= (cluster->parent %) current-cluster))
+                               (remove nil?))]
              (apply str (for [cluster clusters]
                           (graph->dot nodes [] (assoc options ::cluster cluster)))))
 
