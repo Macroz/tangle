@@ -129,7 +129,7 @@
    :else (str x)))
 
 (deftest format-id-test
-  (are [e x] (= e (format-option-value x))
+  (are [e x] (= e (format-id x))
        "\"42\"" "42"
        "42" 42
        "42" :42
