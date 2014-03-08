@@ -9,7 +9,7 @@ Tangle is a Clojure library to visualize your tangle of data with [GraphViz](htt
 Add to your project.clj:
 
 ```clj
-[tangle "0.1.2"]
+[macroz/tangle "0.1.2"]
 ```
 
 Run in your favourite REPL:
@@ -28,6 +28,10 @@ Now do something with the image!
 nil
 > (view-image i)
 ```
+
+This is what you will get:
+
+![Example graph](examples/1.png?raw=true)
 
 Background
 ----------
