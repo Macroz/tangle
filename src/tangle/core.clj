@@ -298,4 +298,7 @@
   "Uses GraphViz to render the DOT into an image"
   [dot format]
   (let [{:keys [out err]} (sh/sh "dot" (str "-T" format) :in dot :out-enc :bytes)]
-    (javax.imageio.ImageIO/read (io/input-stream out))))
+    (if (= "svg" format)
+      (io/input-stream out)
+      (javax.imageio.ImageIO/read (io/input-stream out)))))
+
