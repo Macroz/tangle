@@ -141,7 +141,9 @@
   "Formats an option value in DOT format with proper escaping"
   [x]
   (cond
-   (string? x) (str \" (escape x) \")
+   (string? x) (if (= \< (first x)) ; HTML-labels
+                 x
+                 (str \" (escape x) \"))
    (keyword? x) (name x)
    (coll? x) (str "\""
                   (->> x
@@ -301,4 +303,3 @@
     (if (= "svg" format)
       (io/input-stream out)
       (javax.imageio.ImageIO/read (io/input-stream out)))))
-
