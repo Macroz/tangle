@@ -111,9 +111,9 @@
 
 (deftest format-label-test
   (are [e x] (= e (format-label x))
-       "" (format-label nil)
-       "foobar" (format-label "foobar")
-       ":a|:b|{:c|{:d|:e}}" (format-label [:a :b [:c [:d :e]]])
+       "" nil
+       "foobar" "foobar"
+       ":a|:b|{:c|{:d|:e}}" [:a :b [:c [:d :e]]]
        "42" 42
        ":foobar" :foobar
        ))
