@@ -195,18 +195,14 @@
 
 
 (defn- format-node
-  "Formats the node as DOT node.
-
-  Note the :id option is removed before formatting options."
+  "Formats the node as DOT node."
   [id options]
-  (let [options (dissoc options :id)]
-    (str id (wrap-brackets-if options (format-options options)))))
+  (str id (wrap-brackets-if options (format-options options))))
 
 (deftest format-node-test
   (are [e id opts] (= e (format-node id opts))
        "5" 5 {}
-       "5" 5 {:id :id-is-disregarded}
-       "5[foo=bar, baz=\"quux\"]" 5 {:id 42 :foo :bar :baz "quux"}
+       "5[id=42, foo=bar, baz=\"quux\"]" 5 (ordered-map :id 42 :foo :bar :baz "quux")
        ))
 
 
