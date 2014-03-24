@@ -238,7 +238,7 @@
   [nodes edges options]
   (let [directed? (:directed? options false)
         node->descriptor (:node->descriptor options (constantly nil))
-        edge->descriptor (:edge->descriptor options identity)
+        edge->descriptor (:edge->descriptor options (constantly nil))
         node->id (comp format-id (:node->id options identity))
         node->cluster (:node->cluster options)
         cluster->parent (:cluster->parent options (constantly nil))
