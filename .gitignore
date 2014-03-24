@@ -19,3 +19,4 @@ cljs.js
 .project
 .classpath
 bin
+pom.xml*
