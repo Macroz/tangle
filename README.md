@@ -1,5 +1,10 @@
 tangle
 ======
+_/'taŋg(ə)l/_
+_noun_
+1. a confused mass of something twisted together.
+_"a tangle of golden data"_
+synonyms:  [Dorothy](https://github.com/daveray/dorothy), [Rhizome](https://github.com/ztellman/rhizome)
 
 Tangle is a Clojure library to visualize your tangle of data with [GraphViz](http://www.graphviz.org/).
 
