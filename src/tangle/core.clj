@@ -1,6 +1,4 @@
 (ns tangle.core
-  (:use [clojure.test])
-  (:use [flatland.ordered.map :only [ordered-map]])
   (:require [clojure.string :as str]
             [clojure.java.shell :as sh]
             [clojure.java.io :as io]))
@@ -32,13 +30,6 @@
   [s]
   (str/escape s escape-cmap))
 
-(deftest escape-test
-  (are [e x] (= e (escape x))
-       "foobar" "foobar"
-       "foo\\|bar" "foo|bar"
-       "\\{foobar\\}" "{foobar}"
-       "foo\\:bar" "foo:bar"
-       ))
 
 
 
@@ -48,13 +39,6 @@
   (if-not (empty? t)
     (str "[" x "]")
     x))
-
-(deftest wrap-brackets-if-test
-  (are [e t x] (= e (wrap-brackets-if t x))
-       "foo" nil "foo"
-       "foo" [] "foo"
-       "[foo]" [1] "foo"
-       ))
 
 
 
@@ -84,17 +68,6 @@
                              (apply str))
         :else (pr-str x)))
 
-(deftest format-record-test
-  (are [e x] (= e (format-record x))
-       "" nil
-       "" []
-       "a" "a"
-       "a" ["a"]
-       "a|b" ["a" "b"]
-       "{a|b}" [["a" "b"]]
-       "{a|b}|c" [["a" "b"] "c"]
-       "{a|b}|{c|d}" [["a" "b"] ["c" "d"]]
-       ))
 
 
 
@@ -109,14 +82,6 @@
         (sequential? x) (format-record x)
         :else (pr-str x)))
 
-(deftest format-label-test
-  (are [e x] (= e (format-label x))
-       "" nil
-       "foobar" "foobar"
-       ":a|:b|{:c|{:d|:e}}" [:a :b [:c [:d :e]]]
-       "42" 42
-       ":foobar" :foobar
-       ))
 
 
 
@@ -128,12 +93,6 @@
    (keyword? x) (name x)
    :else (str x)))
 
-(deftest format-id-test
-  (are [e x] (= e (format-id x))
-       "\"42\"" "42"
-       "42" 42
-       "42" :42
-       ))
 
 
 
@@ -153,25 +112,10 @@
                   "\"")
    :else (str x)))
 
-(deftest format-option-value-test
-  (are [e x] (= e (format-option-value x))
-       "42" 42
-       "foo" :foo
-       "\"foo\"" "foo"
-       "\"0,1,2\"" (range 3)
-       ))
-
 (defn- format-option
   "Formats a single option in DOT format"
   [[k v]]
   (str (name k) "=" (format-option-value v)))
-
-(deftest format-option-test
-  (are [e x] (= e (format-option x))
-       "x=1" [:x 1]
-       "x=\"foobar\"" [:x "foobar"]
-       "x=\"0,1,2\"" [:x (range 3)]
-       ))
 
 (defn- format-options
   "Formats a map of options in DOT format"
@@ -184,13 +128,6 @@
            (interpose ", ")
            (apply str))))
 
-(deftest format-options-test
-  (are [e x] (= e (format-options x))
-       "" {}
-       "x=1" {:x 1}
-       "x=1, y=2" (ordered-map :x 1 :y 2)
-       "label=\"a b\"" {:label "a b"}
-       ))
 
 
 
@@ -199,11 +136,6 @@
   [id options]
   (str id (wrap-brackets-if options (format-options options))))
 
-(deftest format-node-test
-  (are [e id opts] (= e (format-node id opts))
-       "5" 5 {}
-       "5[id=42, foo=bar, baz=\"quux\"]" 5 (ordered-map :id 42 :foo :bar :baz "quux")
-       ))
 
 
 
@@ -213,14 +145,6 @@
   (let [arrow (if directed? " -> " " -- ")]
     (str (format-id src) arrow (format-id dst)
          (wrap-brackets-if options (format-options options)))))
-
-(deftest format-edge-test
-  (are [e src dst opts dir] (= e (format-edge src dst opts dir))
-       "\"a\" -- \"b\"" "a" "b" {} false
-       "a -- b" :a :b {} false
-       "a -> b" :a :b {} true
-       "a -- \"b\"[label=\"foobar\", weight=1]" :a "b" (ordered-map :label "foobar" :weight 1) false
-       ))
 
 (defn map-edges [m]
   (mapcat (fn [[k vs]]
