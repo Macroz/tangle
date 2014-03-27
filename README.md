@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/macroz/tangle.png?branch=master)](https://travis-ci.org/macroz/tangle)
+
 tangle
 ======
 _/'taŋg(ə)l/_<br>
