@@ -1,5 +1,4 @@
-
-tangle [![Build Status](https://travis-ci.org/Macroz/tangle.png?branch=master)](https://travis-ci.org/Macroz/tangle)
+tangle [![Build Status](https://travis-ci.org/Macroz/tangle.svg?branch=master)](https://travis-ci.org/Macroz/tangle)
 ======
 _/'taŋg(ə)l/_<br>
 _noun_
