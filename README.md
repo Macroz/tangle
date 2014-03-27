@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/macroz/tangle.png?branch=master)](https://travis-ci.org/macroz/tangle)
+[![Build Status](https://travis-ci.org/Macroz/tangle.png?branch=master)](https://travis-ci.org/Macroz/tangle)
 
 tangle
 ======
