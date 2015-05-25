@@ -14,9 +14,7 @@ Tangle is a Clojure library to visualize your tangle of data with [GraphViz](htt
 
 Add to your project.clj:
 
-```clj
-[macroz/tangle "0.1.5"]
-```
+[![Clojars Project](http://clojars.org/macroz/tangle/latest-version.svg)](http://clojars.org/macroz/tangle)
 
 Run in your favourite REPL:
 
