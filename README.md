@@ -7,7 +7,7 @@ _noun_
 _"a tangle of golden data"_<br>
 synonyms:  [Dorothy](https://github.com/daveray/dorothy), [Rhizome](https://github.com/ztellman/rhizome)
 
-Tangle is a Clojure library to visualize your tangle of data with [GraphViz](http://www.graphviz.org/).
+Tangle is a Clojure library to visualize your tangle of data with [Graphviz](http://www.graphviz.org/).
 
 1 Minute Version
 ----------------
@@ -54,18 +54,20 @@ a -- c[style=dashed, label="another"]
 }
 ```
 
+You may also be interested in [archi](https://www.github.com/Macroz/archi)
+
 Background
 ----------
 
-Through the years I have used GraphViz for many projects. I prefer to draw diagrams by programming and use it for layout. Despite its limitations, I have used it successfully and delivered many a graph.
+Through the years I have used Graphviz for many projects. I prefer to draw diagrams by programming and use it for layout. Despite its limitations, I have used it successfully and delivered many a graph.
 
-To use GraphViz in Clojure, you may consider [Dorothy](https://github.com/daveray/dorothy) and [Rhizome](https://github.com/ztellman/rhizome). I find Dorothy a little bit too simple, you basically need a DSL on top of it. Rhizome does that but doesn't support multiple edges between same nodes conveniently. Hence I have decided to write my own. Thank you to both authors for inspiration!
+To use Graphviz in Clojure, you may consider [Dorothy](https://github.com/daveray/dorothy) and [Rhizome](https://github.com/ztellman/rhizome). I find Dorothy a little bit too simple, you basically need a DSL on top of it. Rhizome does that but doesn't support multiple edges between same nodes conveniently. Hence I have decided to write my own. Thank you to both authors for inspiration!
 
 Tangle is quite compatible with Rhizome, if you decide you want to pop up Swing frames with images.
 
 License
 -------
 
-Copyright © 2014 Markku Rontu
+Copyright © 2014-2015 Markku Rontu
 
 Distributed under the Eclipse Public License, the same as Clojure.
