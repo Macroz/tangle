@@ -54,7 +54,7 @@ a -- c[style=dashed, label="another"]
 }
 ```
 
-You may also be interested in [archi](https://www.github.com/Macroz/archi)
+You may also be interested in [archi](https://www.github.com/Macroz/archi) for a use of tangle, as well as drawing architecture diagrams.
 
 Background
 ----------
