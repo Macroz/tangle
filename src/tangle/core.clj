@@ -219,7 +219,10 @@
 (defn dot->image
   "Uses GraphViz to render the DOT into an image"
   [dot format]
-  (let [{:keys [out err]} (sh/sh "dot" (str "-T" format) :in dot :out-enc :bytes)]
+  (try
+    (let [{:keys [out err]} (sh/sh "dot" (str "-T" format) :in dot :out-enc :bytes)]
     (if (= "svg" format)
       (io/input-stream out)
-      (javax.imageio.ImageIO/read (io/input-stream out)))))
+      (javax.imageio.ImageIO/read (io/input-stream out))))
+    (catch java.io.IOException e
+      (throw (java.io.IOException. "Graphviz not installed?")))))
