@@ -19,19 +19,10 @@ Add to your project.clj:
 Run in your favourite REPL:
 
 ```clj
-> (use 'tangle.core)
-> (def nodes [:a :b :c :d])
-> (def edges [[:a :b] [:a :c] [:c :d] [:a :c {:label "another" :style :dashed}]])
-> (def dot (graph->dot nodes edges {:shape :box}))
-> (def i (dot->image dot "png"))
-```
-
-Now do something with the image!
-
-```clj
-> (use 'rhizome.viz)
-nil
-> (view-image i)
+(use 'tangle.core)
+(def nodes [:a :b :c :d])
+(def edges [[:a :b] [:a :c] [:c :d] [:a :c {:label "another" :style :dashed}]])
+(def dot (graph->dot nodes edges {:node {:shape :box}}))
 ```
 
 This is what you will get:
@@ -41,23 +32,33 @@ This is what you will get:
 And the corresponding DOT:
 
 ```
-graph {
-graph[dpi=100, rankdir=TP]
-a
-b
-c
-d
+"graph {
+  graph[dpi=100, rankdir=TP]
+  node[shape=box]
+  
+  a
+  b
+  c
+  d
 
-a -- b
-a -- c
-c -- d
-a -- c[style=dashed, label="another"]
-}
+  a -- b
+  a -- c
+  c -- d
+  a -- c[style=dashed, label=\"another\"]
+}"
 ```
 
 You can save an SVG file like this:
-```
+```clj
 (spit "file.svg" (dot->svg dot))
+```
+
+Now if you have [Rhizome](https://github.com/ztellman/rhizome) (or other use for the  BufferedImage)!
+
+```clj
+(def i (dot->image dot "png"))
+(use 'rhizome.viz)
+(view-image i)
 ```
 
 You may also be interested in [archi](https://www.github.com/Macroz/archi) for a use of tangle, as well as drawing architecture diagrams.
