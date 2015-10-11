@@ -226,3 +226,13 @@
       (javax.imageio.ImageIO/read (io/input-stream out))))
     (catch java.io.IOException e
       (throw (java.io.IOException. "Graphviz not installed?")))))
+
+(defn remove-viewbox [svg]
+  (str/replace svg #"viewBox=\"[^\"]+\"" ""))
+
+(defn dot->svg [s]
+  (let [{:keys [out err]} (sh/sh "dot" "-Tsvg" :in s)]
+    (or
+     (remove-viewbox out)
+     (println err))))
+
