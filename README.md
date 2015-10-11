@@ -22,7 +22,8 @@ Run in your favourite REPL:
 > (use 'tangle.core)
 > (def nodes [:a :b :c :d])
 > (def edges [[:a :b] [:a :c] [:c :d] [:a :c {:label "another" :style :dashed}]])
-> (def i (dot->image (graph->dot nodes edges {:shape :box}) "png"))
+> (def dot (graph->dot nodes edges {:shape :box}))
+> (def i (dot->image dot "png"))
 ```
 
 Now do something with the image!
@@ -52,6 +53,11 @@ a -- c
 c -- d
 a -- c[style=dashed, label="another"]
 }
+```
+
+You can save an SVG file like this:
+```
+(spit "file.svg" (dot->svg dot))
 ```
 
 You may also be interested in [archi](https://www.github.com/Macroz/archi) for a use of tangle, as well as drawing architecture diagrams.
