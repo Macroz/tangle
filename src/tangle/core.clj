@@ -22,7 +22,7 @@
 (defn- escape-cmap
   "Character map for escaping DOT values"
   [c]
-  (when ((set "|:\"{}") c)
+  (when ((set "|:\"{}<>[]") c)
     (str "\\" c)))
 
 (defn- escape

@@ -9,6 +9,7 @@
        "foo\\|bar" "foo|bar"
        "\\{foobar\\}" "{foobar}"
        "foo\\:bar" "foo:bar"
+       "\\<\\[foobar\\]\\>" "<[foobar]>"
        ))
 
 
