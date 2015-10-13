@@ -1,7 +1,8 @@
 (ns tangle.core
   (:require [clojure.string :as str]
             [clojure.java.shell :as sh]
-            [clojure.java.io :as io]))
+            [clojure.java.io :as io]
+            [hiccup.core :as h]))
 
 
 
@@ -70,15 +71,28 @@
 
 
 
+(defn- format-hiccup
+  "Recursively format Hiccup-like data into HTML-like labels."
+  [x]
+  (str "<" (h/html x) ">"))
+
+(defn- hiccup?
+  [x]
+  (and (sequential? x) (keyword? (first x))))
+
+
+
 
 (defn- format-label
   "Format label into DOT value.
 
   Handles regular Clojure data types.
-  Sequential data are turned into record type labels."
+  Sequential data are turned into record type labels.
+  Hiccup-like data is turned into HTML-like labels."
   [x]
   (cond (nil? x) ""
         (string? x) x
+        (hiccup? x) (format-hiccup x)
         (sequential? x) (format-record x)
         :else (pr-str x)))
 

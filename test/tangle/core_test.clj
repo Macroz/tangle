@@ -37,11 +37,18 @@
 
 
 
+(deftest format-hiccup-test
+  (are [e x] (= e (#'tangle.core/format-hiccup x))
+       "<<TABLE><TR><TD>foo</TD><TD>1</TD></TR><TR><TD>bar</TD><TD>abc</TD></TR></TABLE>>" [:TABLE [:TR [:TD "foo"] [:TD 1]] [:TR [:TD "bar"] [:TD "abc"]]]
+       "<<TABLE><TR><TD>foo</TD><TD><TABLE><TR><TD>bar</TD><TD>42</TD></TR></TABLE></TD></TR></TABLE>>" [:TABLE [:TR [:TD "foo"] [:TD [:TABLE [:TR [:TD "bar"] [:TD 42]]]]]]))
+
+
+
 (deftest format-label-test
   (are [e x] (= e (#'tangle.core/format-label x))
        "" nil
        "foobar" "foobar"
-       ":a|:b|{:c|{:d|:e}}" [:a :b [:c [:d :e]]]
+       "a|:b|{:c|{:d|:e}}" ["a" :b [:c [:d :e]]]
        "42" 42
        ":foobar" :foobar
        ))
