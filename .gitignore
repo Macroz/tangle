@@ -20,3 +20,4 @@ cljs.js
 .classpath
 bin
 pom.xml*
+.nrepl-port
