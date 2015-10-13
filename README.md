@@ -53,6 +53,8 @@ You can save an SVG file like this:
 (spit "file.svg" (dot->svg dot))
 ```
 
+It's possible to make record nodes if you use vectors for the label. Hiccup-like labels (vector + keyword as first) are transformed into HTML-like labels. This support may be improved in the future.
+
 Now if you have [Rhizome](https://github.com/ztellman/rhizome) (or other use for the  BufferedImage)!
 
 ```clj
