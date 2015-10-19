@@ -186,7 +186,7 @@
         clusters (keys cluster->nodes)]
 
     (apply str
-           (cond current-cluster (str "subgraph cluster_" (cluster->id current-cluster))
+           (cond current-cluster (str "subgraph cluster_" (if (empty? (cluster->id current-cluster)) "none" (cluster->id current-cluster)))
                  directed? "digraph"
                  :else "graph")
            (if (and (not current-cluster) (get-in options [:graph :label]))
