@@ -189,7 +189,7 @@
            (cond current-cluster (str "subgraph cluster_" (cluster->id current-cluster))
                  directed? "digraph"
                  :else "graph")
-           (if (get-in options [:graph :label])
+           (if (and (not current-cluster) (get-in options [:graph :label]))
              (str " \"" (escape (get-in options [:graph :label])) "\"")
              "")
            " {\n"
