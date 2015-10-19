@@ -194,6 +194,12 @@
              "")
            " {\n"
 
+           (when current-cluster
+             (let [cluster-options (cluster->descriptor current-cluster)]
+               (apply str (interpose "\n" (map format-option cluster-options)))))
+
+           "\n"
+
            (when-not current-cluster
              (let [graph-options (merge default-graph-options (:graph options))
                    edge-options (merge default-node-options (:edge options))
