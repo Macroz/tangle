@@ -183,7 +183,14 @@
         cluster->nodes (if node->cluster
                          (group-by node->cluster nodes)
                          {nil nodes})
-        clusters (keys cluster->nodes)]
+        clusters (keys cluster->nodes)
+        full-clusters (loop [open clusters
+                             result []]
+                        (if (empty? open)
+                          (sort (distinct result))
+                          (recur (doall (distinct (remove nil? (map cluster->parent open))))
+                                 (concat result open))))
+        clusters full-clusters]
 
     (apply str
            (cond current-cluster (str "subgraph cluster_" (if (empty? (cluster->id current-cluster)) "none" (cluster->id current-cluster)))
