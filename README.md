@@ -60,7 +60,7 @@ Now if you have [Rhizome](https://github.com/ztellman/rhizome) (or other use for
 ```clj
 (def i (dot->image dot "png"))
 (use 'rhizome.viz)
-(view-image i)
+(view-image (javax.imageio.ImageIO/read i))
 ```
 
 You may also be interested in [archi](https://www.github.com/Macroz/archi) for a use of tangle, as well as drawing architecture diagrams.
