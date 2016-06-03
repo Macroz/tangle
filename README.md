@@ -16,46 +16,60 @@ Add to your project.clj:
 
 [![Clojars Project](http://clojars.org/macroz/tangle/latest-version.svg)](http://clojars.org/macroz/tangle)
 
-Run in your favourite REPL:
+Here's some example usage:
 
 ```clj
-(use 'tangle.core)
-(def nodes [:a :b :c :d])
-(def edges [[:a :b] [:a :c] [:c :d] [:a :c {:label "another" :style :dashed}]])
-(def dot (graph->dot nodes edges {:node {:shape :box}}))
+(ns examples.hello
+  (:use [tangle.core]
+        [clojure.java.io]))
+
+(def html-node {:id "html" :color "blue" :label [:TABLE {:BORDER 0} [:TR [:TD "hic"] [:TD {:BORDER 1} "cup"]]]})
+
+(def nodes [:a :b :c :d html-node])
+
+(def edges [[:a :b] [:a :c] [:c :d] [:a :c {:label "another" :style :dashed}] [:a :html]])
+
+(def dot (graph->dot nodes edges {:node {:shape :box}
+                                  :node->id (fn [n] (if (keyword? n) (name n) (:id n)))
+                                  :node->descriptor (fn [n] (when-not (keyword? n) n))
+                                  }))
+
+(copy (dot->image dot "png") (file "examples/hello.png"))
 ```
 
 This is what you will get:
 
-![Example graph](examples/1.png?raw=true)
+![Example graph](examples/hello.png?raw=true)
 
 And the corresponding DOT:
 
 ```
-"graph {
-  graph[dpi=100, rankdir=TP]
-  node[shape=box]
-  
-  a
-  b
-  c
-  d
+graph {
 
-  a -- b
-  a -- c
-  c -- d
-  a -- c[style=dashed, label=\"another\"]
-}"
+graph[dpi=100, rankdir=TP]
+node[shape=box]
+"a"
+"b"
+"c"
+"d"
+"html"[id="html", color="blue", label=<<TABLE BORDER="0"><TR><TD>hic</TD><TD BORDER="1">cup</TD></TR></TABLE>>]
+
+a -- b
+a -- c
+c -- d
+a -- c[label="another", style=dashed]
+a -- html
+}
 ```
 
-You can save an SVG file like this:
+You can save an SVG file like this. `dot->svg` discards the incorrect viewport, which the `dot->image` doesn't do.
 ```clj
-(spit "file.svg" (dot->svg dot))
+(copy (dot->svg dot) (file "examples/hello.svg"))
 ```
 
-It's possible to make record nodes if you use vectors for the label. Hiccup-like labels (vector + keyword as first) are transformed into HTML-like labels. This support may be improved in the future.
+It's possible to make record nodes if you use vectors for the label. See the `html-node` from the example. Hiccup-like labels (vector + keyword as first) are transformed into HTML-like labels. This support may be improved in the future.
 
-Now if you have [Rhizome](https://github.com/ztellman/rhizome) (or other use for the  BufferedImage)!
+Now if you have [Rhizome](https://github.com/ztellman/rhizome) (or other use for the `BufferedImage`)!
 
 ```clj
 (def i (dot->image dot "png"))
@@ -77,6 +91,6 @@ Tangle is quite compatible with Rhizome, if you decide you want to pop up Swing 
 License
 -------
 
-Copyright © 2014-2015 Markku Rontu
+Copyright © 2014-2016 Markku Rontu
 
 Distributed under the Eclipse Public License, the same as Clojure.
