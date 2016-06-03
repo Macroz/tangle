@@ -1,4 +1,4 @@
-(defproject macroz/tangle "0.1.9"
+(defproject macroz/tangle "0.2.0"
   :description "Tangle - the Clojure library that visualizes your tangle of data with Graphviz."
   :url "https://github.com/Macroz/tangle"
   :license {:name "Eclipse Public License"
