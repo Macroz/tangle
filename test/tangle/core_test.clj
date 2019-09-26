@@ -59,7 +59,7 @@
   (are [e x] (= e (#'tangle.core/format-id x))
        "\"42\"" "42"
        "42" 42
-       "42" :42
+       "\"42\"" :42
        ))
 
 
@@ -92,6 +92,7 @@
 (deftest format-node-test
   (are [e id opts] (= e (#'tangle.core/format-node id opts))
        "5" 5 {}
+       "\"k->w\"" :k->w {}
        "5[id=42, foo=bar, baz=\"quux\"]" 5 (ordered-map :id 42 :foo :bar :baz "quux")
        ))
 
@@ -100,7 +101,7 @@
 (deftest format-edge-test
   (are [e src dst opts dir] (= e (#'tangle.core/format-edge src dst opts dir))
        "\"a\" -- \"b\"" "a" "b" {} false
-       "a -- b" :a :b {} false
-       "a -> b" :a :b {} true
-       "a -- \"b\"[label=\"foobar\", weight=1]" :a "b" (ordered-map :label "foobar" :weight 1) false
+       "\"a\" -- \"b\"" :a :b {} false
+       "\"a\" -> \"b\"" :a :b {} true
+       "\"a\" -- \"b\"[label=\"foobar\", weight=1]" :a "b" (ordered-map :label "foobar" :weight 1) false
        ))

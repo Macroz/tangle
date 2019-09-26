@@ -54,11 +54,11 @@ node[shape=box]
 "d"
 "html"[id="html", color="blue", label=<<TABLE BORDER="0"><TR><TD>hic</TD><TD BORDER="1">cup</TD></TR></TABLE>>]
 
-a -- b
-a -- c
-c -- d
-a -- c[label="another", style=dashed]
-a -- html
+"a" -- "b"
+"a" -- "c"
+"c" -- "d"
+"a" -- "c"[label="another", style=dashed]
+"a" -- "html"
 }
 ```
 

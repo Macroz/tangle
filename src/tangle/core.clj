@@ -104,6 +104,7 @@
   [x]
   (cond
    (string? x) (str \" (escape x) \")
+   (keyword? x) (str \" (name x) \")
    (keyword? x) (name x)
    :else (str x)))
 
@@ -148,7 +149,7 @@
 (defn- format-node
   "Formats the node as DOT node."
   [id options]
-  (str id (wrap-brackets-if options (format-options options))))
+  (str (format-id id) (wrap-brackets-if options (format-options options))))
 
 
 
@@ -173,7 +174,7 @@
   (let [directed? (:directed? options false)
         node->descriptor (:node->descriptor options (constantly nil))
         edge->descriptor (:edge->descriptor options (fn [n1 n2 opts] opts))
-        node->id (comp format-id (:node->id options identity))
+        node->id (:node->id options identity)
         node->cluster (:node->cluster options)
         cluster->parent (:cluster->parent options (constantly nil))
         cluster->id (:cluster->id options identity)
@@ -263,4 +264,3 @@
     (or
      (remove-viewbox out)
      (println err))))
-
