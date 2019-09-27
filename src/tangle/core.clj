@@ -103,10 +103,10 @@
   "Formats an id value in DOT format with proper escaping"
   [x]
   (cond
-   (string? x) (str \" (escape x) \")
-   (keyword? x) (str \" (name x) \")
-   (keyword? x) (name x)
-   :else (str x)))
+    (string? x) (str \" (escape x) \")
+    (keyword? x) (str \" (name x) \")
+    (keyword? x) (name x)
+    :else (str x)))
 
 
 
@@ -115,17 +115,17 @@
   "Formats an option value in DOT format with proper escaping"
   [x]
   (cond
-   (string? x) (if (= \< (first x)) ; HTML-labels
-                 x
-                 (str \" (escape x) \"))
-   (keyword? x) (name x)
-   (coll? x) (str "\""
-                  (->> x
-                       (map format-option-value)
-                       (interpose ",")
-                       (apply str))
-                  "\"")
-   :else (str x)))
+    (string? x) (if (= \< (first x)) ; HTML-labels
+                  x
+                  (str \" (escape x) \"))
+    (keyword? x) (name x)
+    (coll? x) (str "\""
+                   (->> x
+                        (map format-option-value)
+                        (interpose ",")
+                        (apply str))
+                   "\"")
+    :else (str x)))
 
 (defn- format-option
   "Formats a single option in DOT format"
