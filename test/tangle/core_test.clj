@@ -93,6 +93,7 @@
   (are [e id opts] (= e (#'tangle.core/format-node id opts))
        "5" 5 {}
        "\"k->w\"" :k->w {}
+       "\"ns/k->w\"" :ns/k->w {}
        "5[id=42, foo=bar, baz=\"quux\"]" 5 (ordered-map :id 42 :foo :bar :baz "quux")
        ))
 
@@ -103,5 +104,6 @@
        "\"a\" -- \"b\"" "a" "b" {} false
        "\"a\" -- \"b\"" :a :b {} false
        "\"a\" -> \"b\"" :a :b {} true
+       "\"ns/a\" -> \"ns/b\"" :ns/a :ns/b {} true
        "\"a\" -- \"b\"[label=\"foobar\", weight=1]" :a "b" (ordered-map :label "foobar" :weight 1) false
        ))

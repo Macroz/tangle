@@ -104,8 +104,7 @@
   [x]
   (cond
     (string? x) (str \" (escape x) \")
-    (keyword? x) (str \" (name x) \")
-    (keyword? x) (name x)
+    (keyword? x) (str \" (some-> (namespace x) (str \/)) (name x) \")
     :else (str x)))
 
 
