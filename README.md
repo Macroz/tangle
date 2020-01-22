@@ -91,6 +91,6 @@ Tangle is quite compatible with Rhizome, if you decide you want to pop up Swing 
 License
 -------
 
-Copyright © 2014-2019 Markku Rontu
+Copyright © 2014-2020 Markku Rontu
 
 Distributed under the Eclipse Public License, the same as Clojure.
